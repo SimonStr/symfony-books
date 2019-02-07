@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block body %}
+        <h1>All site books</h1>
+        {% if pagination %}
+            {% for book in pagination.items %}
+                <div class="row">
+                    <div class="col-sm-3">
+                        <img src="{{ vich_uploader_asset(book, 'imageFile') }}" alt="preview">
+                    </div>
+                    <div class="col-sm-6">
+                        <h2><a href="{{ path('book_show', {'slug': book.slug}) }}">{{ book.name }}</a></h2>
+                        <p>{{ book.author }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        {% endif %}
+{% endblock %}

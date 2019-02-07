@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    <h1>Simple book</h1>
+
+    {% if book %}
+        <div class="row">
+            <div class="col-sm-3">
+                <img src="{{ vich_uploader_asset(book, 'imageFile') }}" alt="preview">
+            </div>
+            <div class="col-sm-6">
+                <h2><a href="{{ path('book_show', {'slug': book.slug}) }}">{{ book.name }}</a></h2>
+                <p>{{ book.author }}</p>
+            </div>
+            {% if app.user.id == book.UserId %}
+                <div class="col-sm-3 text-right">
+                    <a class="btn btn-info" role="button" href="{{ path('update_book', {'id': book.id}) }}">Edit</a>
+                    <a class="btn btn-danger" role="button" href="{{ path('delete_book', {'id': book.id}) }}">Delete</a>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}

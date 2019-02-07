@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add new book!{% endblock %}
+
+{% block body %}
+        `<h1>Add new book to library</h1>
+        {{ form_start(form) }}
+        <div class="my-custom-class-for-errors">
+            {{ form_errors(form) }}
+        </div>
+        {{ form_end(form) }}
+{% endblock %}
