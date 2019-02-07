@@ -8,7 +8,7 @@
             {% for book in pagination.items %}
                 <div class="row">
                     <div class="col-sm-3">
-                        <img src="{{ vich_uploader_asset(book, 'imageFile') }}" alt="preview">
+                        <img src="/public/{{ vich_uploader_asset(book, 'imageFile') }}" alt="preview">
                     </div>
                     <div class="col-sm-6">
                         <h2><a href="{{ path('book_show', {'slug': book.slug}) }}">{{ book.name }}</a></h2>
