@@ -5,13 +5,10 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Book;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Transliteration;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Form\BookFormType;
 
 
 class BookController extends AbstractController
@@ -67,31 +64,7 @@ class BookController extends AbstractController
         $book = new Book();
         $book->setUserId($this->getUser()->getId());
 
-        $form = $this->createFormBuilder($book)
-            ->add('name', TextType::class, [
-                'label' => 'Enter book name',
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add('author', TextType::class, [
-                'label' => 'Enter book author',
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add('year', DateType::class, [
-                'label' => 'Select created date',
-                'widget' => 'single_text',
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add('imageFile', VichImageType::class, [
-                'required' => true,
-                'allow_delete' => true,
-                'download_uri' => true,
-                'image_uri' => true,
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Add book',
-                'attr' => ['class' => 'btn btn-primary'],
-            ])
-            ->getForm();
+        $form = $this->createForm(BookFormType::class, $book);
 
         $form->handleRequest($request);
 
@@ -128,31 +101,7 @@ class BookController extends AbstractController
         if (!$book->isOwner($this->getUser())) {
             return $this->redirectToRoute('index');
         }
-        $form = $this->createFormBuilder($book)
-            ->add('name', TextType::class, [
-                'label' => 'Enter book name',
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add('author', TextType::class, [
-                'label' => 'Enter book author',
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add('year', DateType::class, [
-                'label' => 'Select created date',
-                'widget' => 'single_text',
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add('imageFile', VichImageType::class, [
-                'required' => true,
-                'allow_delete' => true,
-                'download_uri' => true,
-                'image_uri' => true,
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Edit book',
-                'attr' => ['class' => 'btn btn-primary'],
-            ])
-            ->getForm();
+        $form = $this->createForm(BookFormType::class, $book);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
